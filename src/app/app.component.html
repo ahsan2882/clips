@@ -2,7 +2,7 @@
 <!-- Intro Section -->
 <section class="relative overflow-hidden mb-2">
   <!-- The video -->
-  <video autoplay muted loop class="w-full h-full object-cover absolute z-0">
+  <video autoplay muted loop class="w-full h-full object-cover absolute z-0" onloadedmetadata="this.muted= true " oncanplay="this.play()">
     <source src="assets/video/hero.webm" type="video/webm">
   </video>
 

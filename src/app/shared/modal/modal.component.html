@@ -1,6 +1,6 @@
 <!-- Auth Modal -->
-<div class="fixed z-50 inset-0 overflow-y-auto" id="modal">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center 
+<div class="fixed z-50 inset-0 overflow-y-auto" [ngClass]="{hidden: !modal.isModalOpen()}" id="modal">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center
       sm:block sm:p-0">
         <!-- Modal BG Overlay -->
         <div class="fixed inset-0 transition-opacity">
@@ -18,7 +18,7 @@
                 <!--Title-->
                 <div class="flex justify-between items-center pb-4">
                     <ng-content select="[heading]"></ng-content>
-                    
+
                     <!-- Modal Close Button -->
                     <div class="modal-close cursor-pointer z-50">
                         &#x2715;
