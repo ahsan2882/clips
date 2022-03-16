@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FirebaseError } from 'firebase/app';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +9,7 @@ import { JsonPipe } from '@angular/common';
 })
 export class RegisterComponent {
   inSubmission = false;
-  constructor(private auth: AngularFireAuth) {
+  constructor(private auth: AuthService) {
 
   }
 
@@ -30,7 +28,7 @@ export class RegisterComponent {
   ])
   password = new FormControl('', [
     Validators.required,
-    Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)
+    Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)
   ])
   confirmPassword = new FormControl('', [
     Validators.required,
@@ -61,23 +59,19 @@ export class RegisterComponent {
     this.alertMsg = 'Please wait, your account is being created...'
     this.alertColor = 'blue'
 
-    const { email, password } = this.registerForm.value
-    await this.auth.createUserWithEmailAndPassword(email, password)
-      .then(userCred => {
-        console.log(userCred)
+    await this.auth.createUser(this.registerForm.value)
+      .then(() => {
         this.alertMsg = 'Your account has been created successfully'
         this.alertColor = 'green'
       })
       .catch(err => {
         let error: string = err?.message;
-        error = error.substring(10, error.indexOf('(auth'))
-
+        error = error.substring((error.includes('Firebase')? 10:0), error.indexOf('(auth'))
         console.log(error)
         this.alertMsg = error;
         this.inSubmission = false;
         this.alertColor = 'red'
       })
-
   }
 
 }
