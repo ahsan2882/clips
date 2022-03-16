@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { FirebaseError } from 'firebase/app';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +10,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-
+  inSubmission = false;
   constructor(private auth: AngularFireAuth) {
 
   }
@@ -54,15 +56,28 @@ export class RegisterComponent {
   })
 
   async register() {
+    this.inSubmission = true;
     this.showAlert = true
     this.alertMsg = 'Please wait, your account is being created...'
     this.alertColor = 'blue'
 
     const { email, password } = this.registerForm.value
+    await this.auth.createUserWithEmailAndPassword(email, password)
+      .then(userCred => {
+        console.log(userCred)
+        this.alertMsg = 'Your account has been created successfully'
+        this.alertColor = 'green'
+      })
+      .catch(err => {
+        let error: string = err?.message;
+        error = error.substring(10, error.indexOf('(auth'))
 
-    const userCred = await this.auth.createUserWithEmailAndPassword(
-      email, password
-    )
+        console.log(error)
+        this.alertMsg = error;
+        this.inSubmission = false;
+        this.alertColor = 'red'
+      })
+
   }
 
 }
