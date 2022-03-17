@@ -24,13 +24,11 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openModal(e: Event) {
-    e.preventDefault()
+  openModal() {
     this.modal.toggleModal("auth");
   }
 
-  async logout(e:Event) {
-    e.preventDefault()
+  async logout() {
     await this.afAuth.signOut()
   }
 
