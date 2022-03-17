@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { RegisterValidators } from '../validators/register-validators';
 
 @Component({
   selector: 'app-register',
@@ -51,7 +52,7 @@ export class RegisterComponent {
     password: this.password,
     confirmPassword: this.confirmPassword,
     phoneNumber: this.phoneNumber,
-  })
+  },[RegisterValidators.match('password', 'confirmPassword')])
 
   async register() {
     this.inSubmission = true;
