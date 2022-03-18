@@ -2,7 +2,7 @@
 <section class="container mx-auto my-8 bg-secondary p-6">
   <div class="rounded relative flex flex-col">
     <div class="font-bold mb-6">Upload Video</div>
-    <ng-template *ngIf="!nextStep; else uploadFormCtr">
+    <ng-container *ngIf="!nextStep; else uploadFormCtr">
       <!-- Upload Dropbox -->
       <div appEventBlocker (dragend)="isDragOver = false"
         (dragover)="isDragOver = true" (dragenter)="isDragOver = true" (dragleave)="isDragOver = false"
@@ -14,7 +14,7 @@
       </div>
 
       <input type="file" class="mt-4" (change)="storeFile($event)">
-    </ng-template>
+    </ng-container>
     <!-- Video Editor -->
     <ng-template #uploadFormCtr>
       <app-alert *ngIf="showAlert" [color]="alertColor">
