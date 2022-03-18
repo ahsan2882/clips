@@ -1,7 +1,7 @@
-export default interface IUser{
+export default interface IUser {
   email: string,
-  name: string,
   password?: string,
-  phoneNumber: string,
-  age:number
+  age: number,
+  name: string,
+  phoneNumber: string
 }

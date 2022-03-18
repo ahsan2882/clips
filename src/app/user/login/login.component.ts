@@ -6,18 +6,16 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
 export class LoginComponent implements OnInit {
-
   credentials = {
     email: '',
     password: ''
   }
-
   showAlert = false
-  alertMsg = 'Logging In....'
+  alertMsg = 'Please wait! We are logging you in.'
   alertColor = 'blue'
   inSubmission = false
+
   constructor(private auth: AngularFireAuth) { }
 
   ngOnInit(): void {
@@ -25,25 +23,26 @@ export class LoginComponent implements OnInit {
 
   async login() {
     this.showAlert = true
-    this.alertMsg = 'Logging In....'
+    this.alertMsg = 'Please wait! We are logging you in.'
     this.alertColor = 'blue'
     this.inSubmission = true
-    await this.auth.signInWithEmailAndPassword(
-      this.credentials.email, this.credentials.password
-    )
-      .then(() => {
-        this.alertMsg = 'Logged in'
-        this.alertColor='green'
-      })
-      .catch(err => {
-        console.log(err)
-        this.inSubmission = false
-        let error: string = err?.message;
-        error = error.substring((error.includes('Firebase') ? 10 : 0), error.indexOf('(auth'))
-        this.alertMsg = error
-        this.alertColor = 'red'
-        return
-      })
+
+    try {
+      await this.auth.signInWithEmailAndPassword(
+        this.credentials.email, this.credentials.password
+      )
+    } catch(e) {
+      this.inSubmission = false
+      this.alertMsg = 'An unexpected error occurred. Please try again later.'
+      this.alertColor = 'red'
+
+      console.log(e)
+
+      return 
+    }
+
+    this.alertMsg = 'Success! You are now logged in.'
+    this.alertColor = 'green'
   }
 
 }

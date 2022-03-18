@@ -8,9 +8,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class ClipComponent implements OnInit {
   id = ''
-  constructor(
-    public route: ActivatedRoute
-  ) { }
+
+  constructor(public route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {

@@ -1,12 +1,11 @@
-import firebase from "firebase/compat/app";
-import { QueryDocumentSnapshot } from "@angular/fire/compat/firestore";
+import firebase from 'firebase/compat/app'
 
-export interface IClip{
+export default interface IClip {
+  docID?: string;
   uid: string;
   displayName: string;
   title: string;
   fileName: string;
   url: string;
-  timestamp: firebase.firestore.FieldValue,
-  docID?: string;
+  timestamp: firebase.firestore.FieldValue;
 }

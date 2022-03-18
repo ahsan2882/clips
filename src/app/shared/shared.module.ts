@@ -10,8 +10,6 @@ import { AlertComponent } from './alert/alert.component';
 import { EventBlockerDirective } from './directives/event-blocker.directive';
 // import { ModalService } from '../services/modal.service';
 
-
-
 @NgModule({
   declarations: [
     ModalComponent,
@@ -28,14 +26,12 @@ import { EventBlockerDirective } from './directives/event-blocker.directive';
   ],
   exports: [
     ModalComponent,
-    TabComponent,
     TabsContainerComponent,
+    TabComponent,
     InputComponent,
     AlertComponent,
     EventBlockerDirective
   ],
-  // providers: [
-  //   ModalService
-  // ]
+  // providers: [ModalService]
 })
 export class SharedModule { }
