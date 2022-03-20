@@ -1,3 +1,4 @@
+import { ClipService } from '../services/clip.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class ClipsListComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  constructor(public clipService: ClipService) {
+    this.clipService.getClips()
+   }
 
   ngOnInit(): void {
     window.addEventListener('scroll', this.handleScroll)
@@ -19,7 +22,7 @@ export class ClipsListComponent implements OnInit, OnDestroy {
     const windowBottom = Math.round(scrollTop) + innerHeight === offsetHeight
 
     if (windowBottom) {
-      console.log('window bottom reached')
+      this.clipService.getClips()
     }
   }
   ngOnDestroy(): void {

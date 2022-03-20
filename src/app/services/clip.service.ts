@@ -22,7 +22,7 @@ export class ClipService {
     private auth: AngularFireAuth,
     private storage: AngularFireStorage
   ) {
-    this.clipsCollection = db.collection('clips')
+    this.clipsCollection = this.db.collection('clips')
   }
 
   createClip(data: IClip): Promise<DocumentReference<IClip>> {
@@ -78,6 +78,7 @@ export class ClipService {
       .doc(clip.docID).delete()
   }
   async getClips() {
+    console.log('Fetching clips')
     if (this.pendingRequest) return
     this.pendingRequest = true
     let query = this.clipsCollection.ref
@@ -90,6 +91,7 @@ export class ClipService {
         this.clipsCollection.doc(lastDocID)
           .get()
       )
+      console.log(lastDoc)
       query = query.startAfter(lastDoc)
     }
 
