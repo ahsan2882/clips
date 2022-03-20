@@ -1,6 +1,5 @@
-import videojs from 'video.js';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-clip',
@@ -10,13 +9,10 @@ import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@an
 })
 export class ClipComponent implements OnInit {
   id = ''
-  @ViewChild('videoPlayer', { static: true }) target?: ElementRef
-  player?: videojs.Player
 
   constructor(public route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.player = videojs(this.target?.nativeElement)
     this.route.params.subscribe((params: Params) => {
       this.id = params.id
     })
