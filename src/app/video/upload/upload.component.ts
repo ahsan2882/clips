@@ -1,13 +1,14 @@
+import { v4 as uuid } from 'uuid';
+import { combineLatest } from 'rxjs';
+import { Router } from '@angular/router';
+import firebase from 'firebase/compat/app';
+import { last, switchMap } from 'rxjs/operators';
 import { Component, OnDestroy } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ClipService } from 'src/app/services/clip.service';
+import { FfmpegService } from 'src/app/services/ffmpeg.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
-import { v4 as uuid } from 'uuid'
-import { last, switchMap } from 'rxjs/operators';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app'
-import { ClipService } from 'src/app/services/clip.service';
-import { Router } from '@angular/router';
-import { FfmpegService } from 'src/app/services/ffmpeg.service';
 
 @Component({
   selector: 'app-upload',
@@ -97,8 +98,16 @@ export class UploadComponent implements OnDestroy {
 
     this.screenshotTask = this.storage.upload(screenshotPath, screenshotBlob)
 
-    this.task.percentageChanges().subscribe(progress => {
-      this.percentage = progress as number / 100
+    combineLatest([
+      this.task.percentageChanges(),
+      this.screenshotTask.percentageChanges()
+    ]).subscribe((progress) => {
+      const [clipProgress, screenshotProgress] = progress
+      if (!clipProgress || !screenshotProgress) {
+        return
+      }
+      const total = clipProgress + screenshotProgress
+      this.percentage = (total as number) / 200
     })
 
     this.task.snapshotChanges().pipe(
