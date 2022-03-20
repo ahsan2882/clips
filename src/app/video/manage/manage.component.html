@@ -4,7 +4,7 @@
     <a routerLink="/upload" class="bg-indigo-400 text-white py-4 px-10 text-xl">
       Upload Videos
     </a>
-    
+
     <!-- Sort Videos -->
     <select (change)="sort($event)"
       class="text-black px-8 text-xl outline-none appearance-none">
@@ -23,7 +23,7 @@
 
       <!-- Image -->
       <a href="#">
-        <img class="card-img-top rounded-tl-2xl w-full" src="assets/img/1.jpg">
+        <img class="card-img-top rounded-tl-2xl w-full" crossorigin [src]="clip.screenshotURL">
       </a>
 
       <!-- Body -->
@@ -41,7 +41,7 @@
 
       <!-- Actions -->
       <div class="flex text-center text-2xl bg-gray-800 p-2 mt-auto">
-        <a (click)="openModal($event, clip)" 
+        <a (click)="openModal($event, clip)"
           href="#" class="flex-1 p-2 border-right border-r-2 border-gray-700 transition hover:text-indigo-400">
           <span class="material-icons text-base">build</span>
         </a>
