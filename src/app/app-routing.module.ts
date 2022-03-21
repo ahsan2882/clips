@@ -9,26 +9,30 @@ import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    pathMatch: 'full'
   },
   {
     path: 'about', // example.com/about
-    component: AboutComponent
+    component: AboutComponent,
+    pathMatch: 'full'
   },
   {
     path: 'clip/:id',
     component: ClipComponent,
     resolve: {
       clip: ClipService
-    }
+    },
+    pathMatch: 'full'
   },
   {
     path: '',
-    loadChildren: async () => (await import('./video/video.module')).VideoModule
+    loadChildren: async () => (await import('./video/video.module')).VideoModule,
   },
   {
     path: '**',
-    component: NotFoundComponent
+    component: NotFoundComponent,
+    pathMatch: 'full'
   }
 ];
 

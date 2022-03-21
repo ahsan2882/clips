@@ -2,7 +2,7 @@
 <header id="header" class="bg-secondary">
   <nav class="container mx-auto flex justify-start items-center py-8 px-4">
     <!-- App Name -->
-    <a class="text-3xl text-indigo-400 font-bold uppercase mr-4" 
+    <a class="text-3xl text-indigo-400 font-bold uppercase mr-4"
       routerLink="/">Clips</a>
 
     <div class="flex flex-grow items-center">
@@ -10,7 +10,7 @@
       <ul class="flex flex-row mt-1">
         <!-- Navigation Links -->
         <li *ngIf="!(auth.isAuthenticated$ | async); else authLinks">
-          <a class="px-2" href="#" 
+          <a class="px-2" href="#"
             (click)="openModal($event)">
             Login / Register
           </a>
@@ -18,16 +18,13 @@
         <ng-template #authLinks>
           <li>
             <a class="px-2" routerLink="/manage"
-              routerLinkActive="text-indigo-400"
-              [routerLinkActiveOptions]="{ exact: true }"
-              [queryParams]="{ sort: '1' }">
+              routerLinkActive="text-indigo-400">
               Manage
             </a>
           </li>
           <li>
             <a class="px-2" routerLink="/upload"
-              routerLinkActive="text-indigo-400"
-              [routerLinkActiveOptions]="{ exact: true }">
+              routerLinkActive="text-indigo-400">
               Upload
             </a>
           </li>

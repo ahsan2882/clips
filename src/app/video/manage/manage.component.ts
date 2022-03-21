@@ -14,6 +14,7 @@ export class ManageComponent implements OnInit {
   videoOrder = '1'
   clips: IClip[] = []
   activeClip: IClip | null = null
+  // [queryParams]="{ sort: '1' }"
   sort$: BehaviorSubject<string>
 
   constructor(
@@ -25,9 +26,17 @@ export class ManageComponent implements OnInit {
     this.sort$ = new BehaviorSubject(this.videoOrder)
   }
 
+  navigateWithSort(videoOrder: string) {
+    this.router.navigate([], {
+      queryParams: { sort: videoOrder }
+    })
+  }
+
   ngOnInit(): void {
+    this.navigateWithSort(this.videoOrder)
     this.route.queryParams.subscribe((params: Params) => {
       this.videoOrder = params.sort == '2' ? params.sort : '1'
+      this.navigateWithSort(this.videoOrder)
       this.sort$.next(this.videoOrder)
     })
     this.clipService.getUserClips(this.sort$).subscribe(docs => {
@@ -63,7 +72,7 @@ export class ManageComponent implements OnInit {
 
   update($event: IClip) {
     this.clips.forEach((element, index) => {
-      if(element.docID == $event.docID) {
+      if (element.docID == $event.docID) {
         this.clips[index].title = $event.title
       }
     })
@@ -75,7 +84,7 @@ export class ManageComponent implements OnInit {
     this.clipService.deleteClip(clip)
 
     this.clips.forEach((element, index) => {
-      if(element.docID == clip.docID) {
+      if (element.docID == clip.docID) {
         this.clips.splice(index, 1)
       }
     })

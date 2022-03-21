@@ -14,7 +14,8 @@ const routes: Routes = [
       authOnly: true,
       authGuardPipe: redirectUnauthorizedToHome
     },
-    canActivate: [AngularFireAuthGuard]
+    canActivate: [AngularFireAuthGuard],
+    pathMatch: 'full'
   }, {
     path: 'upload',
     component: UploadComponent,
@@ -22,11 +23,13 @@ const routes: Routes = [
       authOnly: true,
       authGuardPipe: redirectUnauthorizedToHome
     },
-    canActivate: [AngularFireAuthGuard]
+    canActivate: [AngularFireAuthGuard],
+    pathMatch: 'full'
   },
   {
     path: 'manage-clips',
-    redirectTo: 'manage'
+    redirectTo: 'manage',
+    pathMatch: 'full'
   }
 ];
 
